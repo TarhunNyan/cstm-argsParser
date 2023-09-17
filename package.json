@@ -4,5 +4,11 @@
   "description": "Парсим аргументы командной строки в js object",
   "main": "argsParser.js",
   "author": "TarhunNyan",
-  "license": "GPL v3"
+  "license": "GPL v3",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }

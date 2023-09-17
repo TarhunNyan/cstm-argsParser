@@ -5,13 +5,9 @@ function argsParser(args) {
     // const argv = argv.slice(2);
     let result = args;
 
-    console.log(result);
     if (true) { result = argsParser__preParse(result) }
-    console.log(result);
     if (true) { result = argsParser__updateKeys(result) }
-    console.log(result);
     if (true) { result = argsParser__compileParse(result) }
-    // console.log(result);
 
     return result;
 }
@@ -40,13 +36,14 @@ function argsParser__updateKeys(args) {
         if (el.type === tPARAM) { result.push(el) }
     }
 
+    result.push({ type: tLONG, value: 'end' })
     return result;
 }
 
 function argsParser__updateKeys__long(el, result) {
     const expr = findExpression(el.value);
-    result.push({ type: tLONG, value: expr[0] });
-    result.push({ type: tPARAM, value: expr[1] });
+    if (true) { result.push({ type: tLONG, value: expr[0] }) }
+    if (expr[1] != true) { result.push({ type: tPARAM, value: expr[1] }) }
     return result;
 }
 
@@ -72,23 +69,24 @@ function argsParser__compileParse(args) {
     let key, value, isString = false, stringQuote = '\'';
 
     for (let i = 0; i < args.length; i++) {
+        console.log(result)
+
         const el = args[i], type = el.type;
         const isNotParam = type === tLONG || type === tSHORT;
         const isParam = !isNotParam;
 
-        console.log(key, value, isString)
-        if (isNotParam && key == undefined) { key = el.value; continue; }
+        if (isNotParam && key == undefined && value != undefined) { key = el.value; result['params'].push(value); continue; }
+        if (isNotParam && key == undefined && value == undefined) { key = el.value; continue; }
         if (isNotParam && key != undefined && value != undefined) { result[key] = value; key = el.value; value = undefined; continue; }
         if (isNotParam && key != undefined && value == undefined) { result[key] = true; key = el.value; continue; }
 
-        debugger;
         if (isParam && !isString && (el.value[0] === '\'' || el.value[0] === '\"')) { isString = true; stringQuote = el.value[0]; value = el.value.slice(1); continue; }
-        if (isParam && isString && el.value.at(-1) === stringQuote) { value += ' ' + el.value.slice(0, el.value.length - 1); isStart = false; }
+        if (isParam && isString && el.value.at(-1) === stringQuote) { value += ' ' + el.value.slice(0, el.value.length - 1); isString = false; continue; }
         if (isParam && isString) { value += ' ' + el.value; continue; }
 
         if (isParam && key == undefined && value === undefined) { result['params'].push(el.value); continue; }
         if (isParam && key == undefined && value != undefined) { result['params'].push(value); result['params'].push(el.value); value = undefined; continue; }
-        if (isParam && key != undefined && value === undefined) { value = el.value; continue; }
+        if (isParam && key != undefined && value === undefined) { result[key] = el.value; key = undefined; continue; }
         if (isParam && key != undefined && value != undefined) { result[key] = value; key = undefined; value = el.value; continue; }
     }
 
