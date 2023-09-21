@@ -36,7 +36,7 @@ args = argsParser.argsParser(['--help', '--example', '"It', 'is', 'example"']);
 Парсинг коротких параметров:
 
 ```js
-args = argsString.argsString('-hal -s10 -k Okey -te50.25z');
+args = argsParser.argsString('-hal -s10 -k Okey -te50.25z');
 // => args = {
 //      _: [],
 //
@@ -57,7 +57,7 @@ args = argsString.argsString('-hal -s10 -k Okey -te50.25z');
 Парсинг длинных параметров:
 
 ```js
-args = argsString.argsString('--long-param=100 --second-param --third-param Okey');
+args = argsParser.argsString('--long-param=100 --second-param --third-param Okey');
 // => args = {
 //      _: [],
 //      long-param: "100",
@@ -69,7 +69,7 @@ args = argsString.argsString('--long-param=100 --second-param --third-param Okey
 Параметры без ключа
 
 ```js
-args = argsString.argsString('--long-param 1 2 3 4 5 6 7');
+args = argsParser.argsString('--long-param 1 2 3 4 5 6 7');
 // => args = {
 //      _: ["2", "3", "4", "5", "6", "7"],
 //      long-param: "1",
@@ -79,7 +79,7 @@ args = argsString.argsString('--long-param 1 2 3 4 5 6 7');
 Парсинг строки:
 
 ```js
-args = argsString.argsString('--string-example="It\'s value of --string-example key"');
+args = argsParser.argsString('--string-example="It\'s value of --string-example key"');
 // => args = {
 //      _: [],
 //      string-example: "It's value of --string-example key",
