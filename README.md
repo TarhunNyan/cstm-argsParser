@@ -21,7 +21,7 @@ args = argsParser.argsCurrent();
 
 ```javascript
 const argsParser = require('cstm-argsparser');
-args = argsString.argsString('--help --example "It is example"');
+args = argsParser.argsString('--help --example "It is example"');
 ```
 
 Парсинг аргументов из массива:
