@@ -1,7 +1,7 @@
-import { argsParser } from '../src/argsParser';
+import { argsParser, argsString } from '../src/argsParser';
 
 describe(
-    "Тесты на парсинг аргументов",
+    "Тесты на парсинг аргументов пришедших из командной строки, argsParser:",
     () => {
         let testCase: {cli: string; result: object; isOnly?: boolean; }[];
 
@@ -21,9 +21,9 @@ describe(
                 }
             },
             {
-                cli: "--test-param=10",
+                cli: "--test-param=10.5",
                 result: {
-                    "test-param": "10",
+                    "test-param": "10.5",
                     _: []
                 }
             },
@@ -70,9 +70,9 @@ describe(
                 }
             },
             {
-                cli: "-kjs3op5z120",
+                cli: "-kjs3.25op5z120",
                 result: {
-                    "k": true, "j": true, "s": "3", "o": true, "p": "5", "z": "120",
+                    "k": true, "j": true, "s": "3.25", "o": true, "p": "5", "z": "120",
                     _: []
                 }
             },
@@ -140,6 +140,18 @@ describe(
             if (el.isOnly == false || el.isOnly == undefined) {
                 test(el.cli, () => { expect(argsParser(args)).toEqual(result) })
             }
+        })
+    }
+)
+
+test(
+    'Проверка работы с строкой, argsString',
+    () => {
+        expect( argsString('--example -h --value 100')).toEqual({
+            example: true,
+            h: true,
+            value: "100",
+            _: [],
         })
     }
 )

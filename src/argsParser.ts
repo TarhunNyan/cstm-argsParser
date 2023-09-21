@@ -7,7 +7,8 @@ enum AGRS_TYPE {
 
 enum STRING_CONSTANTS {
     CHARCODE_ZERO = '0'.charCodeAt(0),
-    CHARCODE_NINE = '9'.charCodeAt(0)
+    CHARCODE_NINE = '9'.charCodeAt(0),
+    CHARCODE_DOT  = '.'.charCodeAt(0),
 }
 
 interface ArgDescription {
@@ -22,8 +23,12 @@ export default function argsCurrent() {
     return argsParser( args );
 }
 
+export function argsString( str: string ) {
+    const args = str.split(' ');
+    return argsParser( args );
+}
+
 export function argsParser(args: string[]): compileParse {
-    // const argv = argv.slice(2);
     let preParse:ArgDescription[];
     let updateKeys:ArgDescription[];
     let result: compileParse;
@@ -137,7 +142,9 @@ function findExpression(str: string): [string, string | boolean] {
 
 function isNumericSymbol(str: string): boolean {
     const s = str.charCodeAt(0);
-    return s >= STRING_CONSTANTS.CHARCODE_ZERO && s <= STRING_CONSTANTS.CHARCODE_NINE;
+    const isNumeric = s >= STRING_CONSTANTS.CHARCODE_ZERO && s <= STRING_CONSTANTS.CHARCODE_NINE;
+    const isDot = s === STRING_CONSTANTS.CHARCODE_DOT
+    return isNumeric || isDot;
 }
 
 function getNumericString(str: string, start = 0): string {
