@@ -7,28 +7,28 @@
 Установка в проект:
 
 ```bash
-npm install --no-dev
+npm install --no-dev git+https://github.com/TarhunNyan/cstm-argsParser.git
 ```
 
 Парсинг аргументов пришедших из коммандной строки:
 
 ```javascript
-import argsParser from 'cstm-argsparser';
-args = argsParser();
+const argsParser = require('cstm-argsparser');
+args = argsParser.argsCurrent();
 ```
 
 Парсинг аргументов из строки:
 
 ```javascript
-import { argsString } from 'cstm-argsparser';
-args = argsString('--help --example "It is example"');
+const argsParser = require('cstm-argsparser');
+args = argsString.argsString('--help --example "It is example"');
 ```
 
 Парсинг аргументов из массива:
 
 ```javascript
-import { argsParser } from 'cstm-argsparser';
-args = argsParser(['--help', '--example', '"It', 'is', 'example"']);
+const argsParser = require('cstm-argsparser');
+args = argsParser.argsParser(['--help', '--example', '"It', 'is', 'example"']);
 ```
 
 # Примеры
@@ -36,7 +36,7 @@ args = argsParser(['--help', '--example', '"It', 'is', 'example"']);
 Парсинг коротких параметров:
 
 ```js
-args = argsString('-hal -s10 -k Okey -te50.25z');
+args = argsString.argsString('-hal -s10 -k Okey -te50.25z');
 // => args = {
 //      _: [],
 //
@@ -57,18 +57,19 @@ args = argsString('-hal -s10 -k Okey -te50.25z');
 Парсинг длинных параметров:
 
 ```js
-args = argsString('--long-param=100 --second-param Okey');
+args = argsString.argsString('--long-param=100 --second-param --third-param Okey');
 // => args = {
 //      _: [],
 //      long-param: "100",
-//      second-param: "Okey",
+//      second-param: true,
+//      third-param: "Okey",
 // }
 ```
 
 Параметры без ключа
 
 ```js
-args = argsString('--long-param 1 2 3 4 5 6 7');
+args = argsString.argsString('--long-param 1 2 3 4 5 6 7');
 // => args = {
 //      _: ["2", "3", "4", "5", "6", "7"],
 //      long-param: "1",
@@ -78,7 +79,7 @@ args = argsString('--long-param 1 2 3 4 5 6 7');
 Парсинг строки:
 
 ```js
-args = argsString('--string-example="It\'s value of --string-example key"');
+args = argsString.argsString('--string-example="It\'s value of --string-example key"');
 // => args = {
 //      _: [],
 //      string-example: "It's value of --string-example key",
