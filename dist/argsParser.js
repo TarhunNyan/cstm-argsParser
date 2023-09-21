@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.argsParser = void 0;
+exports.argsParser = exports.argsString = void 0;
 var AGRS_TYPE;
 (function (AGRS_TYPE) {
     AGRS_TYPE[AGRS_TYPE["NONE"] = 0] = "NONE";
@@ -12,12 +12,18 @@ var STRING_CONSTANTS;
 (function (STRING_CONSTANTS) {
     STRING_CONSTANTS[STRING_CONSTANTS["CHARCODE_ZERO"] = '0'.charCodeAt(0)] = "CHARCODE_ZERO";
     STRING_CONSTANTS[STRING_CONSTANTS["CHARCODE_NINE"] = '9'.charCodeAt(0)] = "CHARCODE_NINE";
+    STRING_CONSTANTS[STRING_CONSTANTS["CHARCODE_DOT"] = '.'.charCodeAt(0)] = "CHARCODE_DOT";
 })(STRING_CONSTANTS || (STRING_CONSTANTS = {}));
 function argsCurrent() {
     const args = process.argv.slice(2);
     return argsParser(args);
 }
 exports.default = argsCurrent;
+function argsString(str) {
+    const args = str.split(' ');
+    return argsParser(args);
+}
+exports.argsString = argsString;
 function argsParser(args) {
     let preParse;
     let updateKeys;
@@ -193,7 +199,9 @@ function findExpression(str) {
 }
 function isNumericSymbol(str) {
     const s = str.charCodeAt(0);
-    return s >= STRING_CONSTANTS.CHARCODE_ZERO && s <= STRING_CONSTANTS.CHARCODE_NINE;
+    const isNumeric = s >= STRING_CONSTANTS.CHARCODE_ZERO && s <= STRING_CONSTANTS.CHARCODE_NINE;
+    const isDot = s === STRING_CONSTANTS.CHARCODE_DOT;
+    return isNumeric || isDot;
 }
 function getNumericString(str, start = 0) {
     let i = start;
